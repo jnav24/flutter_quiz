@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './answer.dart';
+import './question.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +16,7 @@ class _MyAppState extends State<MyApp> {
 		'What is your favorite animal?'
 	];
 
-	void answerQuestion() {
+	void _answerQuestion() {
 		setState(() {
 			if (this.questionIndex < (this.questions.length - 1)) {
 				this.questionIndex = this.questionIndex + 1;
@@ -34,11 +36,8 @@ class _MyAppState extends State<MyApp> {
 				),
 				body: Column(
 					children: <Widget>[
-						Text(this.questions[this.questionIndex]),
-						RaisedButton(
-							child: Text('click me'),
-							onPressed: answerQuestion,
-						),
+						Question(this.questions[this.questionIndex]),
+						Answer(this._answerQuestion),
 					],
 				),
 			)
