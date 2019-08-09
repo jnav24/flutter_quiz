@@ -11,9 +11,25 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 	int questionIndex = 0;
-	List<String> questions = [
-		'What is your favorite color?',
-		'What is your favorite animal?'
+	List<Map<String, dynamic>> questions = [
+		{
+			'question': 'What is your favorite color?',
+			'answers': [
+				'black',
+				'red',
+				'blue',
+				'green',
+			],
+		},
+		{
+			'question': 'What is your favorite animal?',
+			'answers': [
+				'lion',
+				'bird',
+				'bear',
+				'shark',
+			],
+		},
 	];
 
 	void _answerQuestion() {
@@ -36,8 +52,10 @@ class _MyAppState extends State<MyApp> {
 				),
 				body: Column(
 					children: <Widget>[
-						Question(this.questions[this.questionIndex]),
-						Answer(this._answerQuestion),
+						Question(this.questions[this.questionIndex]['question']),
+						...(this.questions[this.questionIndex]['answers'] as List<String>).map((answer) {
+							return Answer(this._answerQuestion, answer);
+						}).toList(),
 					],
 				),
 			)
