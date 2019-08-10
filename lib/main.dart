@@ -11,7 +11,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 	int questionIndex = 0;
-	List<Map<String, dynamic>> questions = [
+	final List<Map<String, dynamic>> questions = [
 		{
 			'question': 'What is your favorite color?',
 			'answers': [
@@ -34,13 +34,47 @@ class _MyAppState extends State<MyApp> {
 
 	void _answerQuestion() {
 		setState(() {
-			if (this.questionIndex < (this.questions.length - 1)) {
+			if (this._hasMoreQuestions()) {
 				this.questionIndex = this.questionIndex + 1;
-			} else {
-				this.questionIndex = 0;
 			}
 		});
-		print(this.questions[this.questionIndex]);
+	}
+
+	void _resetQuestionIndex() {
+		setState(() {
+			this.questionIndex = 0;
+		});
+	}
+
+	bool _hasMoreQuestions() {
+		return this.questionIndex < (this.questions.length);
+	}
+
+	Widget _finishQuestionState() {
+		return Center(
+			child: Column(
+				children: <Widget>[
+					Text(
+						'All done. - Mikey'
+					),
+					RaisedButton(
+						child: Text('Start quiz over'),
+						onPressed: () => this._resetQuestionIndex(),
+					)
+				],
+			),
+		);
+	}
+
+	Widget _getQuestions() {
+		return Column(
+			children: <Widget>[
+				Question(this.questions[this.questionIndex]['question']),
+				...(this.questions[this.questionIndex]['answers'] as List<String>).map((answer) {
+					return Answer(this._answerQuestion, answer);
+				}).toList(),
+			],
+		);
 	}
 
 	@override
@@ -50,14 +84,7 @@ class _MyAppState extends State<MyApp> {
 				appBar: AppBar(
 					title: Text('hello'),
 				),
-				body: Column(
-					children: <Widget>[
-						Question(this.questions[this.questionIndex]['question']),
-						...(this.questions[this.questionIndex]['answers'] as List<String>).map((answer) {
-							return Answer(this._answerQuestion, answer);
-						}).toList(),
-					],
-				),
+				body: this._hasMoreQuestions() ? this._getQuestions() : this._finishQuestionState(),
 			)
 		);
 	}
