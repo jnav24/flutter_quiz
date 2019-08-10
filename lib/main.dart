@@ -15,24 +15,26 @@ class _MyAppState extends State<MyApp> {
 		{
 			'question': 'What is your favorite color?',
 			'answers': [
-				'black',
-				'red',
-				'blue',
-				'green',
+				{'text': 'black', 'score': 25},
+				{'text': 'red', 'score': 50},
+				{'text': 'blue', 'score': 75},
+				{'text': 'green', 'score': 100},
 			],
 		},
 		{
 			'question': 'What is your favorite animal?',
 			'answers': [
-				'lion',
-				'bird',
-				'bear',
-				'shark',
+				{'text': 'lion', 'score': 25},
+				{'text': 'bird', 'score': 50},
+				{'text': 'bear', 'score': 75},
+				{'text': 'shark', 'score': 100},
 			],
 		},
 	];
+	int _totalScore = 0;
 
-	void _answerQuestion() {
+	void _answerQuestion(int score) {
+		this._totalScore += score;
 		setState(() {
 			if (this._hasMoreQuestions()) {
 				this.questionIndex = this.questionIndex + 1;

@@ -15,6 +15,10 @@ class Answer extends StatelessWidget {
 				onPressed: this._answerQuestion,
 				textColor: Colors.white,
 			),
+			padding: EdgeInsets.symmetric(
+				horizontal: 10,
+				vertical: 5,
+			),
 			width: double.infinity,
 		);
   	}
