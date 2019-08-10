@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './answer.dart';
-import './question.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,33 +50,6 @@ class _MyAppState extends State<MyApp> {
 		return this.questionIndex < (this.questions.length);
 	}
 
-	Widget _finishQuestionState() {
-		return Center(
-			child: Column(
-				children: <Widget>[
-					Text(
-						'All done. - Mikey'
-					),
-					RaisedButton(
-						child: Text('Start quiz over'),
-						onPressed: () => this._resetQuestionIndex(),
-					)
-				],
-			),
-		);
-	}
-
-	Widget _getQuestions() {
-		return Column(
-			children: <Widget>[
-				Question(this.questions[this.questionIndex]['question']),
-				...(this.questions[this.questionIndex]['answers'] as List<String>).map((answer) {
-					return Answer(this._answerQuestion, answer);
-				}).toList(),
-			],
-		);
-	}
-
 	@override
 	Widget build(BuildContext context) {
 		return MaterialApp(
@@ -84,7 +57,7 @@ class _MyAppState extends State<MyApp> {
 				appBar: AppBar(
 					title: Text('hello'),
 				),
-				body: this._hasMoreQuestions() ? this._getQuestions() : this._finishQuestionState(),
+				body: this._hasMoreQuestions() ? Quiz(this.questionIndex, this.questions, this._answerQuestion) : Result(this._resetQuestionIndex),
 			)
 		);
 	}
