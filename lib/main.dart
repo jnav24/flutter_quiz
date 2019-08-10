@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
 
 	void _resetQuestionIndex() {
 		setState(() {
+			this._totalScore = 0;
 			this.questionIndex = 0;
 		});
 	}
@@ -59,7 +60,9 @@ class _MyAppState extends State<MyApp> {
 				appBar: AppBar(
 					title: Text('hello'),
 				),
-				body: this._hasMoreQuestions() ? Quiz(this.questionIndex, this.questions, this._answerQuestion) : Result(this._resetQuestionIndex),
+				body: this._hasMoreQuestions() ?
+				Quiz(this.questionIndex, this.questions, this._answerQuestion) :
+				Result(this._resetQuestionIndex, this._totalScore),
 			)
 		);
 	}
